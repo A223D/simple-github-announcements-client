@@ -5,6 +5,8 @@ First priority is to make it work on Windows 10, and then Windows 11.
 
 Notes: Currently works with windows 10. Missing a tile
 
+Seems that ToastGeneric requires path to app
+
 '''
 
 import winrt.windows.ui.notifications as notifications
@@ -21,7 +23,22 @@ print(xmlString.get_xml())
 print()
 
 
-xmlString = "<toast><visual><binding template=\"ToastImageAndText02\"><image id=\"1\" src=\"file:///D:\\Code\\announcements\\simple-github-announcements-client\\grump.png\"/><text id=\"1\">This is some text</text><text id=\"2\">This is some longer text. I wish it was shorter. What if it were even shorter?</text></binding></visual></toast>"
+# xmlString = "<toast><visual><binding template=\"ToastImageAndText02\"><image id=\"1\" src=\"file:///C:\\Users\\kgoel\\OneDrive - Synopsys, Inc\\Desktop\\myLearning\\simple-github-announcements-client\\grump.png\"/><text id=\"1\">This is some text</text><text id=\"2\">This is some longer text. I wish it was shorter. What if it were even shorter?</text></binding></visual></toast>"
+xmlString = """
+<toast><visual><binding template=\"ToastGeneric\"><image placement=\"appLogoOverride\" id=\"1\" hint-crop=\"circle\" src=\"file:///D:\\Code\\announcements\\simple-github-announcements-client\\grump.png\"/><text id=\"1\">This is some text</text><text id=\"2\">This is some longer text. I wish it was shorter. What if it were even shorter?</text></binding></visual><actions>
+          <action content='See more details' arguments='action=viewDetails;contentId=351'/>
+          <action content='Remind me later' arguments='action=remindLater;contentId=351'/>
+      </actions></toast>
+      """
+
+# xmlString = """
+# <toast>
+#   <visual>
+#     <binding template="ToastGeneric">
+#     </binding>
+#   </visual>
+# </toast>
+# """
 
 # images = toastXml.getElementsByTagName("image");
 
@@ -76,7 +93,8 @@ print(xmlDoc.get_xml())
 
 toast = notifications.ToastNotification(xmlDoc);
 
-notificationManager.create_toast_notifier("Notifire").show(toast);
+notificationManager.create_toast_notifier(r"C:\Python312\python.exe").show(toast);
+# notificationManager.create_toast_notifier("Notifire").show(toast);
 
 
 # # Create the toast notification
